@@ -1,7 +1,7 @@
-import { UserModel } from "../models/userSchema.js";
+import { UserModel } from "../models/signUpSchema.js"
 import bcrypt from "bcryptjs";
 
-export const userSignUp = async (req, res, next) => {
+export const addNewUser = async (req, res, next) => {
     try {
         const { userName, userEmail, password } = req.body;
 

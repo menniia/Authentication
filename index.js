@@ -2,8 +2,9 @@ import express from "express";
 import session from "express-session";
 import mongoose from "mongoose";
 import "dotenv/config"
-import userRouter from "./routers/userRouter.js";
 import expressOasGenerator from "express-oas-generator";
+import signUpRouter from "./routers/signUpRouter.js";
+import loginRouter from "./routers/loginRouter.js";
 
 // connect to database
 await mongoose.connect(process.env.MONGO_URL);
@@ -31,7 +32,9 @@ app.use(
 );
 
 // use routes
-app.use(userRouter);
+app.use(signUpRouter);
+app.use(loginRouter);
+
 expressOasGenerator.handleRequests();
 app.use((req, res) => {
     res.redirect("/api-docs/");
@@ -42,3 +45,7 @@ const port = process.env.PORT || 5678;
 app.listen(port, () => {
     console.log(`Server is listening at port: ${port}`);
 });
+
+
+//$2a$10$GheLD3KO3Kd5cClHzusQ7.lh9GCsKW2yXWi0WutB.XbgjKAaa8B2m
+//userPassword
