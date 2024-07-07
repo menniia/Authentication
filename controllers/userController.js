@@ -9,6 +9,11 @@ export const userSignUp = async (req, res, next) => {
             return res.status(400).json({ message: "Enter all fields" });
         }
 
+        const accurateEmail = userEmail.includes("@");
+        if (!accurateEmail) {
+            return res.status(400).json({ message: "Enter correct email" });
+        }
+
         // to check if user data is already in the database
         const existingUser = await UserModel.findOne({ userEmail });
         if (existingUser) {
@@ -18,8 +23,8 @@ export const userSignUp = async (req, res, next) => {
         }
 
         // create hashed password
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(password, salt);
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
         // create new user with hashed password
         const newUser = await UserModel.create({
